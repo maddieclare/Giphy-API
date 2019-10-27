@@ -1,0 +1,27 @@
+#search-buttons {
+    width: 100vw;
+}
+
+.search-button {
+    margin: 10px;
+}
+
+#results {
+    min-height: 100vh;
+    min-width: 100vw;
+}
+
+.image-result {
+    margin: 20px;
+    background-color: lightgray;
+    float: left;
+}
+
+.image-only {
+    margin: 20px;
+}
+
+.image-details {
+    float: right;
+    padding: 10px;
+}

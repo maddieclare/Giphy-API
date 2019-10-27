@@ -1,22 +1,31 @@
-let topics = ["cat", "dog", "pig", "owl", "duck", "parrot", "fox", "elephant", "gorilla", "shark"]
+let topics = [
+  "cat",
+  "dog",
+  "pig",
+  "owl",
+  "duck",
+  "parrot",
+  "fox",
+  "elephant",
+  "gorilla",
+  "shark"
+];
 
 for (let i = 0; i < topics.length; i++) {
-    let button = $("<button>");
-    button.append(topics[i]);
-    button.attr("class", "search-term")
-    button.attr("animal-type", topics[i]);
-    $("#search-buttons").append(button);
+  let button = $("<button>");
+  button.append(topics[i]);
+  button.attr("class", "search-button btn btn-outline-primary");
+  button.attr("search-term", topics[i]);
+  $("#search-buttons").append(button);
 }
 
-$(".search-term").on("click", function() {
-  // new variable (person) contains search button attribute "data-animal"
-  var animal = $(this).attr("animal-type");
+$(".search-button").on("click", function() {
+  var searchTerm = $(this).attr("search-term");
   var queryUrl =
     "https://api.giphy.com/v1/gifs/search?q=" +
-    animal +
+    searchTerm +
     "&api_key=jhPOZhUKBDuDczyOSuEabgqPr58TyBMk&limit=10";
 
-  // AJAX jQuery function requests data from queryURL
   $.ajax({
     url: queryUrl,
     method: "GET"
@@ -25,16 +34,35 @@ $(".search-term").on("click", function() {
 
     for (let i = 0; i < results.length; i++) {
       let gifDiv = $("<div>");
+      gifDiv.attr("class", "image-result rounded");
 
       let rating = results[i].rating;
 
-      let info = $("<p>").text("Rating: " + rating);
+      let info = $("<div>");
+      info.attr("class", "image-details");
+      info.html("<p> Rating: " + rating.toUpperCase() + "</p>");
 
-      var animalImage = $("<img>");
-      animalImage.attr("src", results[i].images.fixed_height.url);
+      var image = $("<img>");
+      image.attr("src", results[i].images.fixed_height_still.url);
+      image.attr("data-still", results[i].images.fixed_height_still.url);
+      image.attr("data-animate", results[i].images.fixed_height.url);
+      image.attr("data-state", "still");
+      image.attr("class", "image-only");
+
+      image.on("click", function() {
+        let state = $(this).attr("data-state");
+        console.log(state);
+        if (state === "still") {
+          $(this).attr("src", $(this).attr("data-animate"));
+          $(this).attr("data-state", "animate");
+        } else if (state === "animate") {
+          $(this).attr("src", $(this).attr("data-still"));
+          $(this).attr("data-state", "still");
+        }
+      });
 
       gifDiv.prepend(info);
-      gifDiv.prepend(animalImage);
+      gifDiv.prepend(image);
 
       $("#results").prepend(gifDiv);
     }
