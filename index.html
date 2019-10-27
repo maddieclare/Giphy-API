@@ -19,12 +19,42 @@
   <body>
     <div class="container-fluid">
       <div class="row justify-content-around">
-        <div class="col-lg-12" id="search-bar">
+        <div class="col-md-8 search-bar">
           <div id="search-buttons"></div>
         </div>
+        <div class="col-md-4 search-bar">
+          <form class="form-inline" id="add-search-topic">
+            <div class="form-group mb-2">
+              <label for="add-topic" class="sr-only">Email</label>
+              <input
+                type="text"
+                readonly
+                class="form-control-plaintext"
+                id="add-topic"
+                value="Add a search item:"
+              />
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+              <label for="topic-input" class="sr-only">Topic</label>
+              <input
+                type="text"
+                class="form-control"
+                id="topic-input"
+                value=""
+              />
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary mb-2"
+              id="add-topic-button"
+            >
+              Add
+            </button>
+          </form>
+        </div>
       </div>
-      <div class="row">
-        <div class="col-lg-12" id="search-results">
+      <div class="row justify-content-centre">
+        <div class="col-md-12" id="search-results">
           <div id="results"></div>
         </div>
       </div>
