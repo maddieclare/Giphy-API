@@ -18,7 +18,8 @@
 
 .image-details {
     float: right;
-    padding: 10px;
+    padding-top: 20px;
+    padding-right: 20px;
 }
 
 #load-more {

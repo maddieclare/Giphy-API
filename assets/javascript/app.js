@@ -54,11 +54,15 @@ function loadGifs(whichTopic) {
       let gifDiv = $("<div>");
       gifDiv.attr("class", "image-result rounded");
 
+      let title = results[i].title;
       let rating = results[i].rating;
+      let giphyUrl = results[i].url;
 
       let info = $("<div>");
       info.attr("class", "image-details");
-      info.html("<p> Rating: " + rating.toUpperCase() + "</p>");
+      info.append("<p><b>Title: </b>" + title + "</p>")
+      info.append("<p> Rating: " + rating.toUpperCase() + "</p>");
+      info.append("<p><a href=" + giphyUrl + ">" + "Giphy URL" + "</a></p>")
 
       image = $("<img>");
       image.attr("src", results[i].images.fixed_height_still.url);
@@ -112,11 +116,13 @@ function loadMoreGifs(whichTopic) {
       let gifDiv = $("<div>");
       gifDiv.attr("class", "image-result rounded");
 
+      let title = results[i].title;
       let rating = results[i].rating;
 
       let info = $("<div>");
       info.attr("class", "image-details");
-      info.html("<p> Rating: " + rating.toUpperCase() + "</p>");
+      info.append("<p><b>Title: </b>" + title + "</p>")
+      info.append("<p><b>Rating: </b>" + rating.toUpperCase() + "</p>");
 
       image = $("<img>");
       image.attr("src", results[i].images.fixed_height_still.url);
