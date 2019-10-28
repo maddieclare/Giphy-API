@@ -13,76 +13,70 @@ let topics = [
 
 let userTopicInput;
 
-refreshTopicButtons();
+let image;
+
+let searchTerm;
+
+let queryUrl;
 
 function refreshTopicButtons() {
   $("#search-buttons").empty();
+
   for (let i = 0; i < topics.length; i++) {
     let button = $("<button>");
     button.append(topics[i]);
     button.attr("class", "search-button btn btn-outline-primary");
-    button.attr("search-term", topics[i]);
+    button.attr("id", topics[i]);
     $("#search-buttons").append(button);
   }
+}
 
-  $(".search-button").on("click", function() {
-    let searchTerm = $(this).attr("search-term");
-    let queryUrl =
-      "https://api.giphy.com/v1/gifs/search?q=" +
-      searchTerm +
-      "&api_key=jhPOZhUKBDuDczyOSuEabgqPr58TyBMk&limit=10";
+function loadGifs(whichTopic) {
+  searchTerm = $(whichTopic).attr("id");
+  queryUrl =
+    "https://api.giphy.com/v1/gifs/search?q=" +
+    searchTerm +
+    "&api_key=jhPOZhUKBDuDczyOSuEabgqPr58TyBMk&limit=10";
 
-    $.ajax({
-      url: queryUrl,
-      method: "GET"
-    }).then(function(response) {
-      let results = response.data;
+  $.ajax({
+    url: queryUrl,
+    method: "GET"
+  }).then(function(response) {
+    let results = response.data;
 
-      for (let i = 0; i < results.length; i++) {
-        let gifDiv = $("<div>");
-        gifDiv.attr("class", "image-result rounded");
+    for (let i = 0; i < results.length; i++) {
+      let gifDiv = $("<div>");
+      gifDiv.attr("class", "image-result rounded");
 
-        let rating = results[i].rating;
+      let rating = results[i].rating;
 
-        let info = $("<div>");
-        info.attr("class", "image-details");
-        info.html("<p> Rating: " + rating.toUpperCase() + "</p>");
+      let info = $("<div>");
+      info.attr("class", "image-details");
+      info.html("<p> Rating: " + rating.toUpperCase() + "</p>");
 
-        var image = $("<img>");
-        image.attr("src", results[i].images.fixed_height_still.url);
-        image.attr("data-still", results[i].images.fixed_height_still.url);
-        image.attr("data-animate", results[i].images.fixed_height.url);
-        image.attr("data-state", "still");
-        image.attr("class", "image-only");
+      image = $("<img>");
+      image.attr("src", results[i].images.fixed_height_still.url);
+      image.attr("data-still", results[i].images.fixed_height_still.url);
+      image.attr("data-animate", results[i].images.fixed_height.url);
+      image.attr("data-state", "still");
+      image.attr("class", "image-only");
+      image.attr("id", i);
 
-        image.on("click", function() {
-          let state = $(this).attr("data-state");
-          console.log(state);
-          if (state === "still") {
-            $(this).attr("src", $(this).attr("data-animate"));
-            $(this).attr("data-state", "animate");
-          } else if (state === "animate") {
-            $(this).attr("src", $(this).attr("data-still"));
-            $(this).attr("data-state", "still");
-          }
-        });
+      gifDiv.prepend(info);
+      gifDiv.prepend(image);
 
-        gifDiv.prepend(info);
-        gifDiv.prepend(image);
-
-        $("#results").prepend(gifDiv);
-      }
-    });
+      $("#results").prepend(gifDiv);
+    }
   });
 }
 
-$("#topic-input").keyup(function() {
-  userTopicInput = $(this).val();
-});
-
-$("#add-topic-button").on("click", function(event) {
-  event.preventDefault();
-  let searchInput = userTopicInput;
-  topics.push(searchInput);
-  refreshTopicButtons();
-});
+function startStopGifs(whichImage) {
+  let state = $(whichImage).attr("data-state");
+  if (state === "still") {
+    $(whichImage).attr("src", $(whichImage).attr("data-animate"));
+    $(whichImage).attr("data-state", "animate");
+  } else if (state === "animate") {
+    $(whichImage).attr("src", $(whichImage).attr("data-still"));
+    $(whichImage).attr("data-state", "still");
+  }
+}

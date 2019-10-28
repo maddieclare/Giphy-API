@@ -6,11 +6,6 @@
     margin-top: 10px;
 }
 
-#results {
-    min-height: 100vh;
-    /* min-width: 100vw; */
-}
-
 .image-result {
     margin: 20px;
     background-color: lightgray;
@@ -24,4 +19,9 @@
 .image-details {
     float: right;
     padding: 10px;
+}
+
+#load-more {
+    text-align: center;
+    display: none;
 }

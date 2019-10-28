@@ -58,9 +58,38 @@
           <div id="results"></div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12" id="load-more">
+          <button class="btn btn-outline-primary">Load more</button>
+        </div>
+      </div>
     </div>
     <script src="assets/javascript/app.js"></script>
+    <script>
+      refreshTopicButtons();
+
+      $("#search-buttons").on("click", function(event) {
+        loadGifs(event.target);
+      });
+
+      $("#results").on("click", function(event) {
+        startStopGifs(event.target);
+      });
+
+      $("#load-more").on("click", function(event) {
+        loadGifs(event.target);
+      });
+
+      $("#topic-input").keyup(function() {
+        userTopicInput = $(this).val();
+      });
+
+      $("#add-topic-button").on("click", function(event) {
+        event.preventDefault();
+        let searchInput = userTopicInput;
+        topics.push(searchInput);
+        refreshTopicButtons();
+      });
+    </script>
   </body>
 </html>
-
-<!-- API key: jhPOZhUKBDuDczyOSuEabgqPr58TyBMk -->
