@@ -52,17 +52,17 @@ function loadGifs(whichTopic) {
 
     for (let i = 0; i < results.length; i++) {
       let gifDiv = $("<div>");
-      gifDiv.attr("class", "image-result rounded");
+      gifDiv.attr("class", "image-result bg-primary rounded");
 
       let title = results[i].title;
       let rating = results[i].rating;
       let giphyUrl = results[i].url;
 
       let info = $("<div>");
-      info.attr("class", "image-details");
+      info.attr("class", "image-details text-light");
       info.append("<p><b>Title: </b>" + title + "</p>")
       info.append("<p> Rating: " + rating.toUpperCase() + "</p>");
-      info.append("<p><a href=" + giphyUrl + ">" + "Giphy URL" + "</a></p>")
+      info.append("<p><b><a href=" + giphyUrl + ">" + "Giphy URL" + "</a></b></p>")
 
       image = $("<img>");
       image.attr("src", results[i].images.fixed_height_still.url);
@@ -114,13 +114,13 @@ function loadMoreGifs(whichTopic) {
 
     for (let i = 0; i < results.length; i++) {
       let gifDiv = $("<div>");
-      gifDiv.attr("class", "image-result rounded");
+      gifDiv.attr("class", "image-result bg-primary rounded");
 
       let title = results[i].title;
       let rating = results[i].rating;
 
       let info = $("<div>");
-      info.attr("class", "image-details");
+      info.attr("class", "image-details text-light");
       info.append("<p><b>Title: </b>" + title + "</p>")
       info.append("<p><b>Rating: </b>" + rating.toUpperCase() + "</p>");
 
